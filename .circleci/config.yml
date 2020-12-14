@@ -1,0 +1,36 @@
+version: 2.1
+jobs:
+  build_image:
+    machine: true
+
+    steps:
+      - checkout
+      - run:
+         name: Build Docker image
+         command: | 
+           docker build -t a1zk/blabla-test:0.1.$CIRCLE_BUILD_NUM .
+           docker tag a1zk/blabla-test:0.1.$CIRCLE_BUILD_NUM a1zk/blabla-test:latest
+      - run:
+         name: Push to Dockerhub
+         command: |
+           docker login -u $DOCKER_LOGIN -p $DOCKER_PASS
+           docker push a1zk/blabla-test:0.1.$CIRCLE_BUILD_NUM
+           docker push a1zk/blabla-test:latest
+  test:
+    build_image:
+      machine: true
+    steps:
+      - checkout
+      - run:
+         name: Build image for test
+         command: docker build -t a1zk/blabla-test:test .
+      - run:
+         name: Smoke test
+         command: test.sh
+workflows:
+  test_and_build_image:
+    jobs:
+      - build_image:
+          requires:
+            - test
+      - test
