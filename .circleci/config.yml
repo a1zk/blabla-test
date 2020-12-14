@@ -17,7 +17,7 @@ jobs:
            docker push a1zk/blabla-test:0.1.$CIRCLE_BUILD_NUM
            docker push a1zk/blabla-test:latest
   test:
-      machine: true
+    machine: true
     steps:
       - checkout
       - run:
