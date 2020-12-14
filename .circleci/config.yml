@@ -25,7 +25,7 @@ jobs:
          command: docker build -t a1zk/blabla-test:test .
       - run:
          name: Smoke test
-         command: ./test.sh
+         command: chmod a+x && ./test.sh
 workflows:
   test_and_build_image:
     jobs:

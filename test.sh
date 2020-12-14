@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o pipefail
+
 echo "Running smoke test"
 echo "___________________"
 echo ">> Chec version <<"
